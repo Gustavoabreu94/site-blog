@@ -1,5 +1,6 @@
 import { allPosts } from "@/.contentlayer/generated";
 import { Avatar } from "@/src/components/avatar";
+import { MarkDown } from "@/src/components/markdown/markdown";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,46 +26,58 @@ export default function PostPage() {
 
   return (
     <main className="mt-32 text-gray-100">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink asChild className="text-action-sm">
-              <Link href="/blog">Blog</Link>
-            </BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <span className="text-blue-200 text-action-sm">{post?.title}</span>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 lg:gap-12">
-        <article className="bg-gray-600 rounded-lg overflow-hidden border-gray-400 border-[1px]">
-          <figure className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
-            <Image
-              src={post?.image ?? ""}
-              alt={post?.title ?? ""}
-              fill
-              className="object-cover"
-            />
-          </figure>
+      <div className="container space-y-12 px-4 md:px-8">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild className="text-action-sm">
+                <Link href="/blog">Blog</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <span className="text-blue-200 text-action-sm">
+                {post?.title}
+              </span>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-6 lg:gap-12">
+          <article className="bg-gray-600 rounded-lg overflow-hidden border-gray-400 border-[1px]">
+            <figure className="relative aspect-[16/10] w-full overflow-hidden rounded-lg">
+              <Image
+                src={post?.image ?? ""}
+                alt={post?.title ?? ""}
+                fill
+                className="object-cover"
+              />
+            </figure>
 
-          <header className="p-4 md:p-6 lg:p-12 pb-0">
-            <h1 className="mb-6 text-balance text-heading-lg md:text-heading-xl lg:text-heading-xl">
-              {" "}
-              {post?.title}
-            </h1>
-            <Avatar.Container>
-              <Avatar.Image alt={post?.author.name} src={post?.author.avatar} />
-              <Avatar.Content>
-                <Avatar.Title> {post?.author.name}</Avatar.Title>
-                <Avatar.Description>
-                  Publiado em <time dateTime={post?.date}>{publishedData}</time>
-                </Avatar.Description>
-              </Avatar.Content>
-            </Avatar.Container>
-          </header>
-        </article>
+            <header className="p-4 md:p-6 lg:p-12 pb-0 mt-8 md:mt-12">
+              <h1 className="mb-8 text-balance text-heading-lg md:text-heading-xl lg:text-heading-xl">
+                {post?.title}
+              </h1>
+              <Avatar.Container>
+                <Avatar.Image
+                  size="sm"
+                  alt={post?.author.name ?? ""}
+                  src={post?.author.avatar ?? ""}
+                />
+                <Avatar.Content>
+                  <Avatar.Title> {post?.author.name}</Avatar.Title>
+                  <Avatar.Description>
+                    Publiado em{" "}
+                    <time dateTime={post?.date}>{publishedData}</time>
+                  </Avatar.Description>
+                </Avatar.Content>
+              </Avatar.Container>
+            </header>
+
+            <div className="prose prose-invert max-w-none px-4 mt-12 md:px-6 md:mt-12">
+              <MarkDown content={post?.body.raw ?? ""} />
+            </div>
+          </article>
+        </div>
       </div>
     </main>
   );
