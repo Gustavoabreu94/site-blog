@@ -8,6 +8,8 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator,
 } from "@/src/components/ui/breadcrumb";
+import { Button } from "@/src/components/ui/button";
+import { useShare } from "@/src/hooks/use-share";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -23,6 +25,14 @@ export default function PostPage() {
   const publishedData = post?.date
     ? new Date(post?.date).toLocaleDateString("pt-BR")
     : "";
+
+  const postUrl = `https://site.set/blog/${slug}`;
+
+  const { shareButtons } = useShare({
+    url: postUrl,
+    title: post?.title,
+    text: post?.description,
+  });
 
   return (
     <main className="mt-32 text-gray-100">
@@ -77,6 +87,28 @@ export default function PostPage() {
               <MarkDown content={post?.body.raw ?? ""} />
             </div>
           </article>
+
+          <aside className="space-y-6">
+            <div className="rounded-lg bg-gray-700 px-4 md:px-6">
+              <h2 className="mb-4 text-heading-xs text-gray-100">
+                Compartilhar
+              </h2>
+
+              <div className="space-y-3">
+                {shareButtons.map((provider) => (
+                  <Button
+                    key={provider.name}
+                    variant="outline"
+                    className="w-full justify-start gap-2"
+                    onClick={() => provider.action}
+                  >
+                    {provider.icon}
+                    {provider.name}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </aside>
         </div>
       </div>
     </main>
