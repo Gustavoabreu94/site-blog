@@ -2,8 +2,8 @@ import { allPosts } from "@/.contentlayer/generated";
 import { Search } from "@/src/components/search/search";
 import { Inbox } from "lucide-react";
 import { useRouter } from "next/router";
-import { PostCard } from "./post-card";
-import { PostGridCard } from "./post-grid-card";
+import { PostCard } from "./components/post-card";
+import { PostGridCard } from "./components/post-grid-card";
 
 export function BlogList() {
   const router = useRouter();

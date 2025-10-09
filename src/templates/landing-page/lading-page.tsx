@@ -1,4 +1,3 @@
-import { CallToAction } from "./call-to-action";
 import { CustomerStory } from "./customer-story";
 import { FeatureSection } from "./feature-section";
 import { HeroSection } from "./hero-section";
@@ -11,7 +10,6 @@ export const LadingPage = () => {
       <FeatureSection />
       <SupportSection />
       <CustomerStory />
-      <CallToAction />
     </article>
   );
 };
