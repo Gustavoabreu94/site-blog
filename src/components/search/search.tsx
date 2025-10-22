@@ -19,10 +19,15 @@ export const Search = () => {
 
   const handleQueryChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuery = event.target.value;
-    router.push(`/blog?q=${encodeURIComponent(newQuery)}`, undefined, {
-      shallow: true,
-      scroll: false,
-    });
+
+    if (newQuery === "") {
+      resetSearch();
+    } else {
+      router.push(`/blog?q=${encodeURIComponent(newQuery)}`, undefined, {
+        shallow: true,
+        scroll: false,
+      });
+    }
   };
 
   const resetSearch = () => {
